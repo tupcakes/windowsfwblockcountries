@@ -7,7 +7,6 @@ New-Item -Path c:\temp -ItemType Directory
 Invoke-WebRequest -Uri $url -OutFile $file
 
 
-
 $russianIPs = Get-Content $file
 
 $numrules = [math]::ceiling($russianIPs.count / 1000)
@@ -15,7 +14,7 @@ $numrules = [math]::ceiling($russianIPs.count / 1000)
 
 for ($i = 0; $i -lt $numrules; $i++) {
     $rulename = $name + "-" + $i
-    New-NetFirewallRule -DisplayName $rulename -Direction Outbound
+    New-NetFirewallRule -DisplayName $rulename -Direction Outbound -Action Block
     
     Get-NetFirewallRule -DisplayName $rulename | 
         Get-NetFirewallAddressFilter | 
